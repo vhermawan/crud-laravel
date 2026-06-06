@@ -36,10 +36,12 @@ class FoodController extends Controller
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $foods = DB::select(
-            'SELECT * FROM foods WHERE name LIKE ? ORDER BY name ASC',
-            ['%'.$validated['name'].'%']
-        );
+        // $foods = DB::select(
+        //     'SELECT * FROM food WHERE name LIKE ? ORDER BY name ASC',
+        //     ['%'.$validated['name'].'%']
+        // );
+
+        $foods = Food::where('name', 'like', $validated['name'])->orderBy('name')->get();
 
         return $this->successResponse($foods);
     }
